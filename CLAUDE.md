@@ -31,17 +31,22 @@ pushing.
 ## Architecture
 
 ```
-index.js                          SDK wiring only: handlers registered before connect()
-src/devices/index.js              registry of the device blueprints + dispatch helpers
-src/devices/<type>.js             one device type per file (buildDevice, onPoll, onSetValue...)
-src/scenes.js                     scene action handlers (manifest `scene_actions`)
-src/widgets.js                    dashboard widget handlers (manifest `widgets`)
+index.js                          SDK wiring only: createApp(gladys), then connect()
+src/app.js                        handlers + the minute cycle (own timer, onPoll fallback)
+src/elia.js                       Elia Open Data client (ods161 per minute, ods162 per quarter-hour)
+src/tennet.js                     TenneT Balance Delta High Res client + quarter-hour price
+src/market.js                     quarter-hours known per zone (memory only)
+src/device.js                     one device per zone (be, nl): features and states
+src/triggers.js                   scene triggers: price turns negative / above a threshold
+src/widget.js                     dashboard widget `prices`
 src/config.js                     DEFAULT_CONFIG (mirrors the manifest defaults) + normalization
-src/weather.js                    example driver (Open-Meteo)
-gladys-assistant-integration.json manifest: name, config_schema, actions, image...
-docs/en.md, docs/fr.md            user documentation, re-hosted by Gladys (mandatory)
-test/                             node --test, against the SDK's fake Gladys (integration-sdk/testing)
-.github/scripts/release.mjs       release helpers (manifest bump, changelog), tested in test/
+src/i18n.js                       every user-facing text, en/fr/de/es
+src/time.js                       market clock (Europe/Brussels), quarter-hours
+src/errors.js, src/issues.js      SourceError / ActionFailure, repeated failures logged once
+scripts/probe.mjs                 the real APIs with the same clients (network, not in npm test)
+gladys-assistant-integration.json manifest
+docs/{en,fr,de,es,nl}.md          user documentation (store: en, fr, de, es)
+test/                             node --test, against the SDK's fake Gladys and fake APIs
 ```
 
 ## Rules
@@ -78,8 +83,9 @@ test/                             node --test, against the SDK's fake Gladys (in
   `type: "provider"`: 5.1.0). `test/manifest.test.js` ties the manifest to the
   code (defaults, action, scene and widget handlers): change both sides
   together.
-- **User-facing text** is bilingual (English and French): action messages,
-  manifest texts, and `docs/en.md` / `docs/fr.md`, kept in sync.
+- **User-facing text** is in English, French, German and Spanish: action
+  messages, manifest texts, feature names and `docs/*.md` (plus `docs/nl.md`),
+  kept in sync (`test/i18n.test.js`).
 - **Style.** Prettier formats, ESLint catches mistakes. Comments explain why,
   in English. Tests never touch the network.
 
@@ -259,3 +265,27 @@ long, et sur un « Sie »/« Ihr… » de politesse en allemand. Le store exige 
 - Docs `en`, `fr`, `de`, `es` avec les mêmes sections.
 - Chauffe, ouverture, sécurité : ne rien rendre pilotable « comme un thermostat » ou par un assistant
   vocal quand une erreur serait dangereuse (leçon d'OctoPrint).
+
+## Cette intégration (prix de déséquilibre Elia / TenneT)
+
+- **Elia** : `ods161` (par minute, quasi temps réel) donne pour chaque minute le prix et le déséquilibre
+  **cumulés depuis le début du quart d'heure** (`quarterhour`) : l'enregistrement de la minute 14 est la valeur
+  publiée ensuite dans `ods162` (vérifié le 16/11/2026, à de légères révisions près). Retard d'environ une minute,
+  d'où le minuteur à 20 s après la minute. `ods162` ne contient que le jour en cours (depuis minuit à Bruxelles) ;
+  `ods134` est l'historique (un jour de retard), `ods046`/`ods047` s'arrêtent en mai 2024. Pas de clé ; quota
+  global de l'API Opendatasoft très large (en-têtes `x-ratelimit-*`). `qualitystatus` = `NotValidated` /
+  `DataIssue` : valeurs révisables.
+- Déséquilibre du système Elia : **positif = surplus**. Prix plancher observé : −15 000 €/MWh (6/04/2026).
+- **TenneT** : toutes les API de `api.tennet.eu` exigent une clé (`apikey` en en-tête, 403 de la passerelle Azure
+  sans clé), gratuite mais liée à un compte personnel sur developer.tennet.eu : **aucun test réel possible ici**,
+  fixture construite d'après la description OpenAPI (embarquée dans la page `/specs/<api>`). `/latest` de
+  « Balance Delta High Res » : 10 requêtes/min ; l'historique : 8/jour ; « Settlement prices » : 25/jour. Le prix
+  calculé (état de régulation) est **indicatif**. Un quart d'heure coupé au début de la fenêtre de 30 min
+  (`partial`) n'est jamais stocké.
+- Zones : `be` si la case est cochée, `nl` si une clé est saisie. Les identifiants `imbalance:be` / `imbalance:nl`,
+  les clés de fonctionnalités, de déclencheurs (`price_negative_started`, `price_above_started`, seuils), du widget
+  (`prices`, réglage `show_chart`) et l'action `check` sont figés.
+- Les déclencheurs comparent la valeur courante à la précédente (moins de 20 min) : rien au démarrage, une fois par
+  zone, clé, seuil et quart d'heure au plus.
+- Widget : le libellé d'une tuile `value` fait **24 caractères au plus** (`validateWidgetContent` le signale) ;
+  l'heure du quart d'heure passe donc dans le `status`.
