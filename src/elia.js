@@ -27,7 +27,7 @@ const finite = (value) => (typeof value === 'number' && Number.isFinite(value) ?
  * @param {typeof fetch} [options.fetch]
  * @param {number} [options.timeoutMs]
  */
-export function createEliaClient({ fetch = globalThis.fetch, timeoutMs = 15000 } = {}) {
+export function createEliaClient({ fetch = globalThis.fetch, timeoutMs = 10000 } = {}) {
   async function get(dataset, params) {
     const url = new URL(`${BASE}/${dataset}/records`);
     for (const [key, value] of Object.entries(params)) {

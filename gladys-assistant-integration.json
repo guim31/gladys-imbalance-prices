@@ -159,7 +159,7 @@
         "de": "Fragt Elia und TenneT jetzt ab und zeigt den Preis der laufenden Viertelstunde.",
         "es": "Consulta Elia y TenneT ahora y muestra el precio del cuarto de hora en curso."
       },
-      "timeout_seconds": 40
+      "timeout_seconds": 60
     }
   ],
   "scene_triggers": [

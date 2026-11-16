@@ -99,7 +99,7 @@ export function quarterFromPoints(points) {
  * @param {typeof fetch} [options.fetch]
  * @param {number} [options.timeoutMs]
  */
-export function createTennetClient({ fetch = globalThis.fetch, timeoutMs = 15000 } = {}) {
+export function createTennetClient({ fetch = globalThis.fetch, timeoutMs = 10000 } = {}) {
   return {
     /**
      * The quarter-hours of the last 30 minutes, oldest first.
@@ -155,6 +155,7 @@ export function createTennetClient({ fetch = globalThis.fetch, timeoutMs = 15000
         }
       }
       const quarters = [];
+      const oldest = Math.min(...byQuarter.keys());
       for (const [start, points] of byQuarter) {
         const quarter = quarterFromPoints(points);
         if (quarter) {
@@ -165,7 +166,7 @@ export function createTennetClient({ fetch = globalThis.fetch, timeoutMs = 15000
             minute: Math.max(...ats),
             // The window began after this quarter-hour did: its value is
             // computed on part of it only.
-            partial: Math.min(...ats) - start >= POINT_MS,
+            partial: start === oldest && Math.min(...ats) - start >= POINT_MS,
           });
         }
       }

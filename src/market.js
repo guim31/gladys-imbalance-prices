@@ -72,7 +72,9 @@ export function createMarket({ fetch, now = () => Date.now() } = {}) {
     let changed = store(zone, await elia.minutes(), false);
     const day = marketDayStart(at);
     const lastClosed = quarterStart(at) - QUARTER;
-    const missing = !zone.quarters.get(lastClosed)?.final;
+    // Just after midnight the last closed quarter-hour is yesterday's: ods162
+    // holds today only, it will never be there.
+    const missing = lastClosed >= day && !zone.quarters.get(lastClosed)?.final;
     if (
       zone.dayLoaded !== day ||
       (missing && (zone.dayAskedAt === null || at - zone.dayAskedAt >= DAY_RETRY_MS))

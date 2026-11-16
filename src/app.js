@@ -145,7 +145,8 @@ export function createApp(gladys, options = {}) {
 
   async function fireSceneEvents(zone) {
     const { current, at } = market.snapshot(zone);
-    if (!current) {
+    // A stale value (the source fails) is not a new reading.
+    if (!current || failures.get(zone)) {
       return;
     }
     for (const event of watch.evaluate(zone, current, at)) {
@@ -295,6 +296,8 @@ export function createApp(gladys, options = {}) {
     // Another language: the direction text changes; send everything again.
     gladys.forgetPublishedStates();
     await publishDevices();
+    // A cycle in progress runs with the old configuration: run a new one.
+    await running?.catch(() => {});
     await cycle();
     refreshWidget();
   });

@@ -183,3 +183,23 @@ test('onPoll is a fallback: skipped while the timer runs', async () => {
   await world.gladys.fake.poll(device);
   assert.ok(world.api.requests.length > before);
 });
+
+test('just after midnight, ods162 is not asked again for yesterday', async () => {
+  const world = await createWorld({ at: '2026-11-16T23:01:30Z' });
+  const days = () => world.api.requests.filter((r) => r.url.pathname.includes('/ods162/')).length;
+  const first = days();
+  for (let i = 0; i < 10; i += 1) {
+    world.clock.advance(MINUTE);
+    await world.app.cycle();
+  }
+  assert.equal(days(), first);
+});
+
+test('a new TenneT key is read at once, even during a cycle', async () => {
+  const world = await createWorld();
+  const pending = world.app.cycle();
+  await world.gladys.fake.configUpdated({ tennet_api_key: TENNET_KEY });
+  await pending;
+  assert.equal(last(world.gladys, 'nl', 'price_mwh'), undefined, 'device not added yet');
+  assert.ok(world.app.market.snapshot('nl').current);
+});
