@@ -10,6 +10,8 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-11-19
+
 ### Added
 
 - Imbalance prices of Belgium (Elia Open Data, no account) and the Netherlands
@@ -22,3 +24,6 @@ the notes of the version's GitHub Release.
   curve of the day (can be hidden).
 - Action "Read the prices now", to check both sources and a TenneT key.
 - Texts in English, French, German and Spanish; documentation also in Dutch.
+
+[Unreleased]: https://github.com/guim31/gladys-imbalance-prices/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/guim31/gladys-imbalance-prices/releases/tag/v1.0.0
