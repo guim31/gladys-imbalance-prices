@@ -1,0 +1,4 @@
+{
+  "error_code": "ODSQLError",
+  "message": "ODSQL query is malformed: Invalid date to parse 'bad'."
+}

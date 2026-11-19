@@ -1,0 +1,293 @@
+{
+  "total_count": 96,
+  "results": [
+    {
+      "datetime": "2026-04-05T22:00:00+00:00",
+      "systemimbalance": 199.888,
+      "imbalanceprice": 52.042
+    },
+    {
+      "datetime": "2026-04-05T22:15:00+00:00",
+      "systemimbalance": 159.598,
+      "imbalanceprice": 50.46
+    },
+    { "datetime": "2026-04-05T22:30:00+00:00", "systemimbalance": 81.814, "imbalanceprice": 50.0 },
+    {
+      "datetime": "2026-04-05T22:45:00+00:00",
+      "systemimbalance": 154.656,
+      "imbalanceprice": 38.453
+    },
+    { "datetime": "2026-04-05T23:00:00+00:00", "systemimbalance": 11.52, "imbalanceprice": 37.77 },
+    { "datetime": "2026-04-05T23:15:00+00:00", "systemimbalance": 25.631, "imbalanceprice": 20.23 },
+    { "datetime": "2026-04-05T23:30:00+00:00", "systemimbalance": 75.822, "imbalanceprice": 22.21 },
+    {
+      "datetime": "2026-04-05T23:45:00+00:00",
+      "systemimbalance": 21.498,
+      "imbalanceprice": 30.885
+    },
+    {
+      "datetime": "2026-04-06T00:00:00+00:00",
+      "systemimbalance": -33.763,
+      "imbalanceprice": 86.298
+    },
+    { "datetime": "2026-04-06T00:15:00+00:00", "systemimbalance": -5.459, "imbalanceprice": 29.71 },
+    { "datetime": "2026-04-06T00:30:00+00:00", "systemimbalance": 3.573, "imbalanceprice": 31.625 },
+    { "datetime": "2026-04-06T00:45:00+00:00", "systemimbalance": -2.859, "imbalanceprice": 29.82 },
+    { "datetime": "2026-04-06T01:00:00+00:00", "systemimbalance": -3.394, "imbalanceprice": 30.24 },
+    { "datetime": "2026-04-06T01:15:00+00:00", "systemimbalance": 6.624, "imbalanceprice": 30.98 },
+    {
+      "datetime": "2026-04-06T01:30:00+00:00",
+      "systemimbalance": -6.011,
+      "imbalanceprice": 29.475
+    },
+    { "datetime": "2026-04-06T01:45:00+00:00", "systemimbalance": -2.096, "imbalanceprice": 30.54 },
+    { "datetime": "2026-04-06T02:00:00+00:00", "systemimbalance": -7.465, "imbalanceprice": 54.0 },
+    { "datetime": "2026-04-06T02:15:00+00:00", "systemimbalance": -17.465, "imbalanceprice": 54.0 },
+    { "datetime": "2026-04-06T02:30:00+00:00", "systemimbalance": -44.893, "imbalanceprice": 58.0 },
+    { "datetime": "2026-04-06T02:45:00+00:00", "systemimbalance": 85.652, "imbalanceprice": 50.0 },
+    {
+      "datetime": "2026-04-06T03:00:00+00:00",
+      "systemimbalance": -13.676,
+      "imbalanceprice": 26.35
+    },
+    { "datetime": "2026-04-06T03:15:00+00:00", "systemimbalance": -8.524, "imbalanceprice": 28.25 },
+    { "datetime": "2026-04-06T03:30:00+00:00", "systemimbalance": -32.822, "imbalanceprice": 50.0 },
+    {
+      "datetime": "2026-04-06T03:45:00+00:00",
+      "systemimbalance": -8.151,
+      "imbalanceprice": 27.115
+    },
+    { "datetime": "2026-04-06T04:00:00+00:00", "systemimbalance": 49.047, "imbalanceprice": 7.65 },
+    { "datetime": "2026-04-06T04:15:00+00:00", "systemimbalance": 19.389, "imbalanceprice": 25.04 },
+    { "datetime": "2026-04-06T04:30:00+00:00", "systemimbalance": 0.374, "imbalanceprice": 26.695 },
+    {
+      "datetime": "2026-04-06T04:45:00+00:00",
+      "systemimbalance": 19.916,
+      "imbalanceprice": 25.995
+    },
+    {
+      "datetime": "2026-04-06T05:00:00+00:00",
+      "systemimbalance": 155.729,
+      "imbalanceprice": 34.779
+    },
+    {
+      "datetime": "2026-04-06T05:15:00+00:00",
+      "systemimbalance": 204.05,
+      "imbalanceprice": 46.913
+    },
+    {
+      "datetime": "2026-04-06T05:30:00+00:00",
+      "systemimbalance": 167.272,
+      "imbalanceprice": 46.631
+    },
+    { "datetime": "2026-04-06T05:45:00+00:00", "systemimbalance": 106.865, "imbalanceprice": 50.0 },
+    { "datetime": "2026-04-06T06:00:00+00:00", "systemimbalance": -3.034, "imbalanceprice": 75.58 },
+    { "datetime": "2026-04-06T06:15:00+00:00", "systemimbalance": 149.17, "imbalanceprice": 50.0 },
+    {
+      "datetime": "2026-04-06T06:30:00+00:00",
+      "systemimbalance": 60.581,
+      "imbalanceprice": 32.799
+    },
+    {
+      "datetime": "2026-04-06T06:45:00+00:00",
+      "systemimbalance": 107.892,
+      "imbalanceprice": 28.665
+    },
+    {
+      "datetime": "2026-04-06T07:00:00+00:00",
+      "systemimbalance": -32.761,
+      "imbalanceprice": 90.016
+    },
+    {
+      "datetime": "2026-04-06T07:15:00+00:00",
+      "systemimbalance": 68.767,
+      "imbalanceprice": 23.036
+    },
+    { "datetime": "2026-04-06T07:30:00+00:00", "systemimbalance": 27.087, "imbalanceprice": 11.0 },
+    {
+      "datetime": "2026-04-06T07:45:00+00:00",
+      "systemimbalance": -17.727,
+      "imbalanceprice": 27.775
+    },
+    {
+      "datetime": "2026-04-06T08:00:00+00:00",
+      "systemimbalance": -52.809,
+      "imbalanceprice": 83.354
+    },
+    { "datetime": "2026-04-06T08:15:00+00:00", "systemimbalance": -4.967, "imbalanceprice": 24.5 },
+    { "datetime": "2026-04-06T08:30:00+00:00", "systemimbalance": 29.088, "imbalanceprice": -1.0 },
+    { "datetime": "2026-04-06T08:45:00+00:00", "systemimbalance": 92.817, "imbalanceprice": -1.0 },
+    {
+      "datetime": "2026-04-06T09:00:00+00:00",
+      "systemimbalance": 227.802,
+      "imbalanceprice": 18.707
+    },
+    {
+      "datetime": "2026-04-06T09:15:00+00:00",
+      "systemimbalance": 335.019,
+      "imbalanceprice": 7.091
+    },
+    {
+      "datetime": "2026-04-06T09:30:00+00:00",
+      "systemimbalance": 210.278,
+      "imbalanceprice": -22.119
+    },
+    { "datetime": "2026-04-06T09:45:00+00:00", "systemimbalance": 328.8, "imbalanceprice": -9.012 },
+    {
+      "datetime": "2026-04-06T10:00:00+00:00",
+      "systemimbalance": 198.533,
+      "imbalanceprice": -221.4
+    },
+    {
+      "datetime": "2026-04-06T10:15:00+00:00",
+      "systemimbalance": 126.952,
+      "imbalanceprice": -200.0
+    },
+    {
+      "datetime": "2026-04-06T10:30:00+00:00",
+      "systemimbalance": 529.597,
+      "imbalanceprice": -43.097
+    },
+    {
+      "datetime": "2026-04-06T10:45:00+00:00",
+      "systemimbalance": 480.083,
+      "imbalanceprice": -247.97
+    },
+    {
+      "datetime": "2026-04-06T11:00:00+00:00",
+      "systemimbalance": 787.442,
+      "imbalanceprice": -438.89
+    },
+    {
+      "datetime": "2026-04-06T11:15:00+00:00",
+      "systemimbalance": 698.255,
+      "imbalanceprice": -1500.0
+    },
+    {
+      "datetime": "2026-04-06T11:30:00+00:00",
+      "systemimbalance": 877.983,
+      "imbalanceprice": -1153.09
+    },
+    {
+      "datetime": "2026-04-06T11:45:00+00:00",
+      "systemimbalance": 975.377,
+      "imbalanceprice": -15000.0
+    },
+    {
+      "datetime": "2026-04-06T12:00:00+00:00",
+      "systemimbalance": 787.795,
+      "imbalanceprice": -15000.0
+    },
+    {
+      "datetime": "2026-04-06T12:15:00+00:00",
+      "systemimbalance": 714.889,
+      "imbalanceprice": -15000.0
+    },
+    {
+      "datetime": "2026-04-06T12:30:00+00:00",
+      "systemimbalance": 232.465,
+      "imbalanceprice": -15000.0
+    },
+    {
+      "datetime": "2026-04-06T12:45:00+00:00",
+      "systemimbalance": 293.707,
+      "imbalanceprice": -15000.0
+    },
+    { "datetime": "2026-04-06T13:00:00+00:00", "systemimbalance": -7.807, "imbalanceprice": 38.0 },
+    { "datetime": "2026-04-06T13:15:00+00:00", "systemimbalance": 81.202, "imbalanceprice": -27.6 },
+    {
+      "datetime": "2026-04-06T13:30:00+00:00",
+      "systemimbalance": 152.155,
+      "imbalanceprice": -68.089
+    },
+    {
+      "datetime": "2026-04-06T13:45:00+00:00",
+      "systemimbalance": 148.736,
+      "imbalanceprice": -36.913
+    },
+    { "datetime": "2026-04-06T14:00:00+00:00", "systemimbalance": 80.262, "imbalanceprice": 0.351 },
+    { "datetime": "2026-04-06T14:15:00+00:00", "systemimbalance": 14.852, "imbalanceprice": 39.0 },
+    { "datetime": "2026-04-06T14:30:00+00:00", "systemimbalance": -13.982, "imbalanceprice": 26.0 },
+    { "datetime": "2026-04-06T14:45:00+00:00", "systemimbalance": 94.083, "imbalanceprice": 2.0 },
+    {
+      "datetime": "2026-04-06T15:00:00+00:00",
+      "systemimbalance": 174.567,
+      "imbalanceprice": -97.488
+    },
+    { "datetime": "2026-04-06T15:15:00+00:00", "systemimbalance": 76.7, "imbalanceprice": -10.0 },
+    { "datetime": "2026-04-06T15:30:00+00:00", "systemimbalance": 124.638, "imbalanceprice": 8.71 },
+    {
+      "datetime": "2026-04-06T15:45:00+00:00",
+      "systemimbalance": 211.169,
+      "imbalanceprice": 23.829
+    },
+    {
+      "datetime": "2026-04-06T16:00:00+00:00",
+      "systemimbalance": 335.97,
+      "imbalanceprice": -132.65
+    },
+    {
+      "datetime": "2026-04-06T16:15:00+00:00",
+      "systemimbalance": 170.277,
+      "imbalanceprice": -21.07
+    },
+    {
+      "datetime": "2026-04-06T16:30:00+00:00",
+      "systemimbalance": 208.536,
+      "imbalanceprice": 52.435
+    },
+    { "datetime": "2026-04-06T16:45:00+00:00", "systemimbalance": 98.369, "imbalanceprice": 55.0 },
+    {
+      "datetime": "2026-04-06T17:00:00+00:00",
+      "systemimbalance": 271.195,
+      "imbalanceprice": 51.676
+    },
+    { "datetime": "2026-04-06T17:15:00+00:00", "systemimbalance": 84.4, "imbalanceprice": 83.85 },
+    { "datetime": "2026-04-06T17:30:00+00:00", "systemimbalance": 85.767, "imbalanceprice": 83.85 },
+    {
+      "datetime": "2026-04-06T17:45:00+00:00",
+      "systemimbalance": -32.238,
+      "imbalanceprice": 137.72
+    },
+    {
+      "datetime": "2026-04-06T18:00:00+00:00",
+      "systemimbalance": -25.897,
+      "imbalanceprice": 110.0
+    },
+    {
+      "datetime": "2026-04-06T18:15:00+00:00",
+      "systemimbalance": 10.419,
+      "imbalanceprice": 124.36
+    },
+    { "datetime": "2026-04-06T18:30:00+00:00", "systemimbalance": -1.51, "imbalanceprice": 124.36 },
+    { "datetime": "2026-04-06T18:45:00+00:00", "systemimbalance": -20.836, "imbalanceprice": 96.9 },
+    { "datetime": "2026-04-06T19:00:00+00:00", "systemimbalance": 27.588, "imbalanceprice": 83.8 },
+    { "datetime": "2026-04-06T19:15:00+00:00", "systemimbalance": 91.48, "imbalanceprice": 68.528 },
+    { "datetime": "2026-04-06T19:30:00+00:00", "systemimbalance": 85.84, "imbalanceprice": 50.065 },
+    {
+      "datetime": "2026-04-06T19:45:00+00:00",
+      "systemimbalance": 73.793,
+      "imbalanceprice": 38.578
+    },
+    {
+      "datetime": "2026-04-06T20:00:00+00:00",
+      "systemimbalance": 117.838,
+      "imbalanceprice": 74.17
+    },
+    { "datetime": "2026-04-06T20:15:00+00:00", "systemimbalance": 44.464, "imbalanceprice": 65.0 },
+    { "datetime": "2026-04-06T20:30:00+00:00", "systemimbalance": 46.403, "imbalanceprice": 65.2 },
+    { "datetime": "2026-04-06T20:45:00+00:00", "systemimbalance": 44.174, "imbalanceprice": 65.0 },
+    { "datetime": "2026-04-06T21:00:00+00:00", "systemimbalance": 66.843, "imbalanceprice": 63.85 },
+    {
+      "datetime": "2026-04-06T21:15:00+00:00",
+      "systemimbalance": 179.499,
+      "imbalanceprice": 62.548
+    },
+    {
+      "datetime": "2026-04-06T21:30:00+00:00",
+      "systemimbalance": 220.597,
+      "imbalanceprice": 59.664
+    },
+    { "datetime": "2026-04-06T21:45:00+00:00", "systemimbalance": 104.869, "imbalanceprice": 63.85 }
+  ]
+}

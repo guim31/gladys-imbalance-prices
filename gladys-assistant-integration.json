@@ -1,177 +1,469 @@
 {
   "manifest_version": 1,
   "type": "device",
-  "name": "Demo Devices Template",
+  "name": "Imbalance prices",
   "description": {
-    "en": "Starter template showing sensors, a switch, a dimmable light and a smart plug.",
-    "fr": "Template de démarrage : capteurs, interrupteur, lampe variable et prise connectée."
+    "en": "Real-time quarter-hour imbalance prices of Elia (Belgium) and TenneT (Netherlands).",
+    "fr": "Prix de déséquilibre quart-horaires en temps réel d'Elia (Belgique) et TenneT (Pays-Bas).",
+    "de": "Ausgleichsenergiepreise je Viertelstunde in Echtzeit von Elia (Belgien) und TenneT (Niederlande).",
+    "es": "Precios de desvío por cuarto de hora en tiempo real de Elia (Bélgica) y TenneT (Países Bajos)."
   },
   "version": "1.0.0",
-  "docker_image": "ghcr.io/gladysassistant/integration-template-js:1.0.0",
-  "gladys_version": ">=5.1.0",
-  "cover_image": "https://raw.githubusercontent.com/GladysAssistant/integration-template-js/master/cover.png",
-  "categories": ["lighting", "security", "environment"],
-  "transports": ["local", "cloud"],
+  "docker_image": "ghcr.io/guim31/gladys-imbalance-prices:1.0.0",
+  "gladys_version": ">=5.3.0",
+  "cover_image": "https://raw.githubusercontent.com/guim31/gladys-imbalance-prices/main/cover.png",
+  "categories": ["energy"],
+  "countries": ["BE", "NL"],
+  "transports": ["cloud"],
   "config_schema": [
     {
       "key": "intro",
       "type": "section",
-      "label": { "en": "Getting started", "fr": "Pour commencer" },
+      "label": {
+        "en": "Imbalance prices",
+        "fr": "Prix de déséquilibre",
+        "de": "Ausgleichsenergiepreise",
+        "es": "Precios de desvío"
+      },
       "description": {
-        "en": "The demo weather station reads real data from the free Open-Meteo API: pick the coordinates to observe. No account, no API key.",
-        "fr": "La station météo de démonstration lit de vraies données via l'API gratuite Open-Meteo : choisissez les coordonnées à observer. Pas de compte, pas de clé d'API."
+        "en": "The imbalance price settles, per quarter-hour, the gap between what the grid planned and what happened. Some dynamic contracts pass it on. Belgium: Elia Open Data, without account. Netherlands: the TenneT API, with a free personal key. Add the devices from the Discovery tab. Not affiliated with Elia or TenneT.",
+        "fr": "Le prix de déséquilibre règle, chaque quart d'heure, l'écart entre ce que le réseau avait prévu et ce qui s'est passé. Certains contrats dynamiques le répercutent. Belgique : Elia Open Data, sans compte. Pays-Bas : l'API TenneT, avec une clé personnelle gratuite. Ajoutez les appareils depuis l'onglet Découverte. Sans lien avec Elia ni TenneT.",
+        "de": "Der Ausgleichsenergiepreis rechnet je Viertelstunde die Abweichung zwischen Plan und Wirklichkeit im Netz ab. Manche dynamischen Verträge geben ihn weiter. Belgien: Elia Open Data, ohne Konto. Niederlande: die TenneT-API, mit einem kostenlosen persönlichen Schlüssel. Füge die Geräte über den Tab „Entdecken“ hinzu. Nicht mit Elia oder TenneT verbunden.",
+        "es": "El precio de desvío liquida, cada cuarto de hora, la diferencia entre lo que la red había previsto y lo que ocurrió. Algunos contratos dinámicos lo repercuten. Bélgica: Elia Open Data, sin cuenta. Países Bajos: la API de TenneT, con una clave personal gratuita. Añada los dispositivos desde la pestaña Descubrir. Sin relación con Elia ni TenneT."
       },
       "links": [
         {
-          "url": "https://open-meteo.com/en/docs",
-          "label": { "en": "Open-Meteo documentation", "fr": "Documentation Open-Meteo" }
+          "url": "https://github.com/guim31/gladys-imbalance-prices/blob/main/docs/en.md",
+          "label": {
+            "en": "Documentation",
+            "fr": "Documentation",
+            "de": "Dokumentation",
+            "es": "Documentación"
+          }
+        },
+        {
+          "url": "https://developer.tennet.eu/register/",
+          "label": {
+            "en": "TenneT API key",
+            "fr": "Clé API TenneT",
+            "de": "TenneT-API-Schlüssel",
+            "es": "Clave API de TenneT"
+          }
         }
       ]
     },
     {
-      "key": "latitude",
-      "type": "number",
-      "label": { "en": "Latitude", "fr": "Latitude" },
-      "description": {
-        "en": "Latitude used for the demo weather sensor.",
-        "fr": "Latitude utilisée par le capteur météo de démonstration."
+      "key": "belgium",
+      "type": "boolean",
+      "label": {
+        "en": "Belgium (Elia)",
+        "fr": "Belgique (Elia)",
+        "de": "Belgien (Elia)",
+        "es": "Bélgica (Elia)"
       },
-      "placeholder": { "en": "e.g. 48.8566", "fr": "ex. 48.8566" },
-      "required": true,
-      "default": 48.8566,
-      "min": -90,
-      "max": 90
+      "description": {
+        "en": "Follow the Belgian imbalance price. No account needed.",
+        "fr": "Suivre le prix de déséquilibre belge. Aucun compte nécessaire.",
+        "de": "Den belgischen Ausgleichsenergiepreis verfolgen. Kein Konto nötig.",
+        "es": "Seguir el precio de desvío belga. No hace falta cuenta."
+      },
+      "required": false,
+      "default": true
     },
     {
-      "key": "longitude",
-      "type": "number",
-      "label": { "en": "Longitude", "fr": "Longitude" },
-      "description": {
-        "en": "Longitude used for the demo weather sensor.",
-        "fr": "Longitude utilisée par le capteur météo de démonstration."
+      "key": "tennet_api_key",
+      "type": "secret",
+      "label": {
+        "en": "TenneT API key (Netherlands)",
+        "fr": "Clé API TenneT (Pays-Bas)",
+        "de": "TenneT-API-Schlüssel (Niederlande)",
+        "es": "Clave API de TenneT (Países Bajos)"
       },
-      "placeholder": { "en": "e.g. 2.3522", "fr": "ex. 2.3522" },
-      "required": true,
-      "default": 2.3522,
-      "min": -180,
-      "max": 180
+      "description": {
+        "en": "Free, from developer.tennet.eu after registering. Empty: the Netherlands are not followed.",
+        "fr": "Gratuite, sur developer.tennet.eu après inscription. Vide : les Pays-Bas ne sont pas suivis.",
+        "de": "Kostenlos auf developer.tennet.eu nach der Registrierung. Leer: Die Niederlande werden nicht verfolgt.",
+        "es": "Gratuita, en developer.tennet.eu tras registrarse. Vacía: los Países Bajos no se siguen."
+      },
+      "required": false
     },
     {
-      "key": "unit",
+      "key": "language",
       "type": "select",
-      "label": { "en": "Temperature unit", "fr": "Unité de température" },
-      "required": false,
-      "default": "celsius",
-      "options": [
-        { "value": "celsius", "label": { "en": "Celsius", "fr": "Celsius" } },
-        { "value": "fahrenheit", "label": { "en": "Fahrenheit", "fr": "Fahrenheit" } }
-      ]
-    },
-    {
-      "key": "poll_frequency",
-      "type": "number",
-      "label": { "en": "Refresh interval (s)", "fr": "Intervalle de rafraîchissement (s)" },
+      "label": {
+        "en": "Language of the names",
+        "fr": "Langue des noms",
+        "de": "Sprache der Namen",
+        "es": "Idioma de los nombres"
+      },
       "description": {
-        "en": "How often sensors are polled, in seconds (one minute minimum).",
-        "fr": "Fréquence d'interrogation des capteurs, en secondes (une minute minimum)."
+        "en": "Used when a device is added to Gladys: the names do not change afterwards.",
+        "fr": "Utilisée quand un appareil est ajouté à Gladys : les noms ne changent plus ensuite.",
+        "de": "Wird beim Hinzufügen eines Geräts zu Gladys verwendet: Die Namen ändern sich danach nicht mehr.",
+        "es": "Se usa cuando un dispositivo se añade a Gladys: los nombres ya no cambian después."
       },
       "required": false,
-      "default": 300,
-      "min": 60,
-      "max": 3600
+      "default": "fr",
+      "options": [
+        {
+          "value": "en",
+          "label": {
+            "en": "English",
+            "fr": "Anglais",
+            "de": "Englisch",
+            "es": "Inglés"
+          }
+        },
+        {
+          "value": "fr",
+          "label": {
+            "en": "French",
+            "fr": "Français",
+            "de": "Französisch",
+            "es": "Francés"
+          }
+        },
+        {
+          "value": "de",
+          "label": {
+            "en": "German",
+            "fr": "Allemand",
+            "de": "Deutsch",
+            "es": "Alemán"
+          }
+        },
+        {
+          "value": "es",
+          "label": {
+            "en": "Spanish",
+            "fr": "Espagnol",
+            "de": "Spanisch",
+            "es": "Español"
+          }
+        }
+      ]
     }
   ],
   "actions": [
     {
-      "key": "test_weather",
-      "label": { "en": "Test the weather provider", "fr": "Tester le fournisseur météo" },
-      "timeout_seconds": 30
-    },
-    {
-      "key": "identify",
-      "label": { "en": "Identify a device", "fr": "Identifier un appareil" },
-      "fields": [
-        {
-          "key": "device",
-          "type": "select",
-          "source": "devices",
-          "label": { "en": "Device", "fr": "Appareil" },
-          "required": true
-        }
-      ]
+      "key": "check",
+      "label": {
+        "en": "Read the prices now",
+        "fr": "Relever les prix maintenant",
+        "de": "Preise jetzt abrufen",
+        "es": "Consultar los precios ahora"
+      },
+      "description": {
+        "en": "Asks Elia and TenneT now and shows the price of the running quarter-hour.",
+        "fr": "Interroge Elia et TenneT maintenant et affiche le prix du quart d'heure en cours.",
+        "de": "Fragt Elia und TenneT jetzt ab und zeigt den Preis der laufenden Viertelstunde.",
+        "es": "Consulta Elia y TenneT ahora y muestra el precio del cuarto de hora en curso."
+      },
+      "timeout_seconds": 60
     }
   ],
   "scene_triggers": [
     {
-      "key": "motion_detected",
-      "label": { "en": "Motion detected", "fr": "Mouvement détecté" },
+      "key": "price_negative_started",
+      "label": {
+        "en": "The imbalance price turns negative",
+        "fr": "Le prix de déséquilibre devient négatif",
+        "de": "Der Ausgleichsenergiepreis wird negativ",
+        "es": "El precio de desvío pasa a negativo"
+      },
       "description": {
-        "en": "A demo motion sensor saw a person or an animal move.",
-        "fr": "Un détecteur de démonstration a vu bouger une personne ou un animal."
+        "en": "The estimated price of the running quarter-hour drops below 0 €/MWh: at most once per quarter-hour.",
+        "fr": "Le prix estimé du quart d'heure en cours passe sous 0 €/MWh : une fois par quart d'heure au plus.",
+        "de": "Der geschätzte Preis der laufenden Viertelstunde fällt unter 0 €/MWh: höchstens einmal pro Viertelstunde.",
+        "es": "El precio estimado del cuarto de hora en curso baja de 0 €/MWh: como mucho una vez por cuarto de hora."
       },
       "fields": [
         {
-          "key": "device",
+          "key": "zone",
           "type": "select",
-          "source": "devices",
-          "label": { "en": "Sensor", "fr": "Détecteur" }
-        },
-        {
-          "key": "target",
-          "type": "multi_select",
-          "label": { "en": "What moved", "fr": "Ce qui a bougé" },
+          "label": {
+            "en": "Zone",
+            "fr": "Zone",
+            "de": "Zone",
+            "es": "Zona"
+          },
+          "description": {
+            "en": "Empty: both zones.",
+            "fr": "Vide : les deux zones.",
+            "de": "Leer: beide Zonen.",
+            "es": "Vacío: ambas zonas."
+          },
+          "required": false,
           "options": [
-            { "value": "person", "label": { "en": "Person", "fr": "Personne" } },
-            { "value": "animal", "label": { "en": "Animal", "fr": "Animal" } }
+            {
+              "value": "be",
+              "label": {
+                "en": "Belgium (Elia)",
+                "fr": "Belgique (Elia)",
+                "de": "Belgien (Elia)",
+                "es": "Bélgica (Elia)"
+              }
+            },
+            {
+              "value": "nl",
+              "label": {
+                "en": "Netherlands (TenneT)",
+                "fr": "Pays-Bas (TenneT)",
+                "de": "Niederlande (TenneT)",
+                "es": "Países Bajos (TenneT)"
+              }
+            }
           ]
         }
       ],
       "variables": [
         {
-          "key": "target",
+          "key": "zone",
           "type": "string",
-          "label": { "en": "What moved", "fr": "Ce qui a bougé" }
+          "label": {
+            "en": "Zone (be, nl)",
+            "fr": "Zone (be, nl)",
+            "de": "Zone (be, nl)",
+            "es": "Zona (be, nl)"
+          }
+        },
+        {
+          "key": "price",
+          "type": "number",
+          "label": {
+            "en": "Price (€/MWh)",
+            "fr": "Prix (€/MWh)",
+            "de": "Preis (€/MWh)",
+            "es": "Precio (€/MWh)"
+          }
+        },
+        {
+          "key": "price_kwh",
+          "type": "number",
+          "label": {
+            "en": "Price (€/kWh)",
+            "fr": "Prix (€/kWh)",
+            "de": "Preis (€/kWh)",
+            "es": "Precio (€/kWh)"
+          }
+        },
+        {
+          "key": "quarter_hour",
+          "type": "string",
+          "label": {
+            "en": "Quarter-hour (HH:MM)",
+            "fr": "Quart d'heure (HH:MM)",
+            "de": "Viertelstunde (HH:MM)",
+            "es": "Cuarto de hora (HH:MM)"
+          }
         }
       ]
-    }
-  ],
-  "scene_actions": [
+    },
     {
-      "key": "identify_device",
-      "label": { "en": "Identify a device", "fr": "Identifier un appareil" },
-      "description": {
-        "en": "Make a device signal itself (the demo light blinks).",
-        "fr": "Fait se signaler un appareil (la lampe de démonstration clignote)."
+      "key": "price_above_started",
+      "label": {
+        "en": "The imbalance price rises above a threshold",
+        "fr": "Le prix de déséquilibre dépasse un seuil",
+        "de": "Der Ausgleichsenergiepreis übersteigt eine Schwelle",
+        "es": "El precio de desvío supera un umbral"
       },
-      "timeout_seconds": 15,
+      "description": {
+        "en": "The estimated price of the running quarter-hour rises above the threshold: at most once per quarter-hour.",
+        "fr": "Le prix estimé du quart d'heure en cours passe au-dessus du seuil : une fois par quart d'heure au plus.",
+        "de": "Der geschätzte Preis der laufenden Viertelstunde steigt über die Schwelle: höchstens einmal pro Viertelstunde.",
+        "es": "El precio estimado del cuarto de hora en curso supera el umbral: como mucho una vez por cuarto de hora."
+      },
       "fields": [
         {
-          "key": "device",
+          "key": "zone",
           "type": "select",
-          "source": "devices",
-          "label": { "en": "Device", "fr": "Appareil" },
-          "required": true
+          "label": {
+            "en": "Zone",
+            "fr": "Zone",
+            "de": "Zone",
+            "es": "Zona"
+          },
+          "description": {
+            "en": "Empty: both zones.",
+            "fr": "Vide : les deux zones.",
+            "de": "Leer: beide Zonen.",
+            "es": "Vacío: ambas zonas."
+          },
+          "required": false,
+          "options": [
+            {
+              "value": "be",
+              "label": {
+                "en": "Belgium (Elia)",
+                "fr": "Belgique (Elia)",
+                "de": "Belgien (Elia)",
+                "es": "Bélgica (Elia)"
+              }
+            },
+            {
+              "value": "nl",
+              "label": {
+                "en": "Netherlands (TenneT)",
+                "fr": "Pays-Bas (TenneT)",
+                "de": "Niederlande (TenneT)",
+                "es": "Países Bajos (TenneT)"
+              }
+            }
+          ]
+        },
+        {
+          "key": "threshold",
+          "type": "select",
+          "label": {
+            "en": "Threshold",
+            "fr": "Seuil",
+            "de": "Schwelle",
+            "es": "Umbral"
+          },
+          "required": true,
+          "default": "200",
+          "options": [
+            {
+              "value": "100",
+              "label": {
+                "en": "100 €/MWh",
+                "fr": "100 €/MWh",
+                "de": "100 €/MWh",
+                "es": "100 €/MWh"
+              }
+            },
+            {
+              "value": "150",
+              "label": {
+                "en": "150 €/MWh",
+                "fr": "150 €/MWh",
+                "de": "150 €/MWh",
+                "es": "150 €/MWh"
+              }
+            },
+            {
+              "value": "200",
+              "label": {
+                "en": "200 €/MWh",
+                "fr": "200 €/MWh",
+                "de": "200 €/MWh",
+                "es": "200 €/MWh"
+              }
+            },
+            {
+              "value": "300",
+              "label": {
+                "en": "300 €/MWh",
+                "fr": "300 €/MWh",
+                "de": "300 €/MWh",
+                "es": "300 €/MWh"
+              }
+            },
+            {
+              "value": "500",
+              "label": {
+                "en": "500 €/MWh",
+                "fr": "500 €/MWh",
+                "de": "500 €/MWh",
+                "es": "500 €/MWh"
+              }
+            },
+            {
+              "value": "1000",
+              "label": {
+                "en": "1000 €/MWh",
+                "fr": "1000 €/MWh",
+                "de": "1000 €/MWh",
+                "es": "1000 €/MWh"
+              }
+            }
+          ]
         }
       ],
-      "outputs": [
+      "variables": [
         {
-          "key": "signalled",
-          "type": "boolean",
-          "label": { "en": "Device signalled", "fr": "Appareil signalé" }
+          "key": "zone",
+          "type": "string",
+          "label": {
+            "en": "Zone (be, nl)",
+            "fr": "Zone (be, nl)",
+            "de": "Zone (be, nl)",
+            "es": "Zona (be, nl)"
+          }
+        },
+        {
+          "key": "price",
+          "type": "number",
+          "label": {
+            "en": "Price (€/MWh)",
+            "fr": "Prix (€/MWh)",
+            "de": "Preis (€/MWh)",
+            "es": "Precio (€/MWh)"
+          }
+        },
+        {
+          "key": "price_kwh",
+          "type": "number",
+          "label": {
+            "en": "Price (€/kWh)",
+            "fr": "Prix (€/kWh)",
+            "de": "Preis (€/kWh)",
+            "es": "Precio (€/kWh)"
+          }
+        },
+        {
+          "key": "quarter_hour",
+          "type": "string",
+          "label": {
+            "en": "Quarter-hour (HH:MM)",
+            "fr": "Quart d'heure (HH:MM)",
+            "de": "Viertelstunde (HH:MM)",
+            "es": "Cuarto de hora (HH:MM)"
+          }
+        },
+        {
+          "key": "threshold",
+          "type": "string",
+          "label": {
+            "en": "Threshold (€/MWh)",
+            "fr": "Seuil (€/MWh)",
+            "de": "Schwelle (€/MWh)",
+            "es": "Umbral (€/MWh)"
+          }
         }
       ]
     }
   ],
   "widgets": [
     {
-      "key": "demo_status",
-      "label": { "en": "Demo status", "fr": "État de la démo" },
+      "key": "prices",
+      "label": {
+        "en": "Imbalance prices",
+        "fr": "Prix de déséquilibre",
+        "de": "Ausgleichspreise",
+        "es": "Precios de desvío"
+      },
       "description": {
-        "en": "Live temperature and plug power, plug connection and observed location.",
-        "fr": "Température et puissance en direct, connexion de la prise, position observée."
+        "en": "Price of the running quarter-hour, the previous one, the imbalance and the day's curve.",
+        "fr": "Prix du quart d'heure en cours, du précédent, déséquilibre et courbe du jour.",
+        "de": "Preis der laufenden und der vorigen Viertelstunde, Ungleichgewicht und Tageskurve.",
+        "es": "Precio del cuarto de hora en curso y del anterior, desequilibrio y curva del día."
       },
       "icon": "activity",
-      "action_timeout_seconds": 15
+      "settings": [
+        {
+          "key": "show_chart",
+          "type": "boolean",
+          "label": {
+            "en": "Show the day's curve",
+            "fr": "Afficher la courbe du jour",
+            "de": "Tageskurve anzeigen",
+            "es": "Mostrar la curva del día"
+          },
+          "required": false,
+          "default": true
+        }
+      ]
     }
   ]
 }

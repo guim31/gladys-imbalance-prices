@@ -30,6 +30,12 @@ Gladys before reporting a problem.
 
 In scope: the code of this repository and the Docker image it publishes.
 
+The integration reads two public APIs over HTTPS (opendata.elia.be,
+api.tennet.eu) and nothing on the local network. Its only secret is the
+optional TenneT API key, kept by Gladys in the integration configuration and
+sent only to api.tennet.eu, in the `apikey` header; it is never logged. Nothing
+is written to `/data`: the prices are kept in memory.
+
 Out of scope: Gladys Assistant itself (see its
 [security policy](https://github.com/GladysAssistant/Gladys/security/policy)),
 and the third-party services and devices the integration talks to.
